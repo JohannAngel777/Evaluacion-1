@@ -46,9 +46,32 @@ const buscarIncidenciaPorId = (req, res) => {
     res.json(incidencia);
 };
 
+const cambiarEstado = (req, res) => {
+    const id = parseInt(req.params.id);
+    const { estado } = req.body;
+
+    const incidencia = incidencias.find((inc) => inc.id === id);
+
+    if (!incidencia) {
+        return res.status(404).json({ mensaje: "Incidencia no encontrada" });
+    }
+
+    switch (estado) {
+        case "Pendiente":
+        case "En Proceso":
+        case "Resuelta":
+        case "Cancelada":
+            incidencia.estado = estado;
+            res.json({ mensaje: "Estado actualizado correctamente" });
+            default:
+            res.status(400).json({ mensaje: "Estado invalido." });
+    }
+};
+
 module.exports = {
     crearIncidencia,
     listarIncidencias,
     buscarIncidenciaPorId,
+    cambiarEstado,
     incidencias
 };
