@@ -30,6 +30,22 @@ const crearIncidencia = (req, res) => {
     res.status(201).json({ mensaje: "Incidencia registrada correctamente" });
 };
 
+const listarIncidencias = (req, res) => {
+    res.json(incidencias);
+};
+
+const buscarIncidenciaPorId = (req, res) => {
+    const id = parseInt(req.params.id);
+
+    const incidencia = incidencias.find((inc) => inc.id === id);
+
+    if (!incidencia) {
+        return res.status(404).json({ mensaje: "Incidencia no encontrada" });
+    }
+
+    res.json(incidencia);
+};
+
 module.exports = {
     crearIncidencia,
     listarIncidencias,
