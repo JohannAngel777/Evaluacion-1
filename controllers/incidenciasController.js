@@ -48,6 +48,7 @@ const buscarIncidenciaPorId = (req, res) => {
 
 const cambiarEstado = (req, res) => {
     const id = parseInt(req.params.id);
+    const { estado } = req.body;
 
     const incidencia = incidencias.find((inc) => inc.id === id);
 
