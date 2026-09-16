@@ -32,5 +32,7 @@ const crearIncidencia = (req, res) => {
 
 module.exports = {
     crearIncidencia,
+    listarIncidencias,
+    buscarIncidenciaPorId,
     incidencias
 };
