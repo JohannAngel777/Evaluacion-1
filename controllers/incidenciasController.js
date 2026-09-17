@@ -1,3 +1,4 @@
+const { buscarPorId } = require('../utils/helpers');
 const incidencias = [];
 let siguienteId = 1;
 
@@ -37,7 +38,7 @@ const listarIncidencias = (req, res) => {
 const buscarIncidenciaPorId = (req, res) => {
     const id = parseInt(req.params.id);
 
-    const incidencia = incidencias.find((inc) => inc.id === id);
+    const incidencia = buscarPorId(incidencias, id);
 
     if (!incidencia) {
         return res.status(404).json({ mensaje: "Incidencia no encontrada" });
@@ -50,20 +51,30 @@ const cambiarEstado = (req, res) => {
     const id = parseInt(req.params.id);
     const { estado } = req.body;
 
-    const incidencia = incidencias.find((inc) => inc.id === id);
+    const incidencia = buscarPorId(incidencias, id);
 
     if (!incidencia) {
         return res.status(404).json({ mensaje: "Incidencia no encontrada" });
     }
 
-    switch (estado) {
-        case "Pendiente":
-        case "En Proceso":
-        case "Resuelta":
-        case "Cancelada":
-            incidencia.estado = estado;
-             return res.json({ mensaje: "Estado actualizado correctamente" });
-            default:
+    if (!estado) {
+        return res.status(400).json({ mensaje: "El campo estado es obligatorio" });
+    }
+
+    switch (estado.toLowerCase()) {
+        case "pendiente":
+            incidencia.estado = "Pendiente";
+            return res.json({ mensaje: "Estado actualizado correctamente" });
+        case "en proceso":
+            incidencia.estado = "En Proceso";
+            return res.json({ mensaje: "Estado actualizado correctamente" });
+        case "resuelta":
+            incidencia.estado = "Resuelta";
+            return res.json({ mensaje: "Estado actualizado correctamente" });
+        case "cancelada":
+            incidencia.estado = "Cancelada";
+            return res.json({ mensaje: "Estado actualizado correctamente" });
+        default:
             return res.status(400).json({ mensaje: "Estado invalido." });
     }
 };
@@ -95,7 +106,7 @@ const getEstadisticas = (req, res) => {
 const getClasificacion = (req, res) => {
     const id = parseInt(req.params.id);
 
-    const incidencia = incidencias.find((inc) => inc.id === id);
+    const incidencia = buscarPorId(incidencias, id);
 
     if (!incidencia) {
         return res.status(404).json({ mensaje: "Incidencia no encontrada" });
