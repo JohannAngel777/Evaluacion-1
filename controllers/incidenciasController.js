@@ -62,9 +62,9 @@ const cambiarEstado = (req, res) => {
         case "Resuelta":
         case "Cancelada":
             incidencia.estado = estado;
-            res.json({ mensaje: "Estado actualizado correctamente" });
+             return res.json({ mensaje: "Estado actualizado correctamente" });
             default:
-            res.status(400).json({ mensaje: "Estado invalido." });
+            return res.status(400).json({ mensaje: "Estado invalido." });
     }
 };
 
