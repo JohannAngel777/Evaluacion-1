@@ -6,6 +6,7 @@ router.post('/', incidenciasController.crearIncidencia);
 router.get('/', incidenciasController.listarIncidencias);
 router.get('/:id', incidenciasController.buscarIncidenciaPorId);
 router.put('/:id/estado', incidenciasController.cambiarEstado);
+router.delete('/:id', incidenciasController.eliminarIncidencia);
 router.get('/:id/clasificacion', incidenciasController.getClasificacion);
 
 module.exports = router;

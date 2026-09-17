@@ -68,6 +68,19 @@ const cambiarEstado = (req, res) => {
     }
 };
 
+const eliminarIncidencia = (req, res) => {
+    const id = parseInt(req.params.id);
+
+    const index = incidencias.findIndex((inc) => inc.id === id);
+
+    if (index === -1) { 
+        return res.status(404).json({ mensaje: "Incidencia no encontrada" });
+    }
+
+    incidencias.splice(index, 1);
+    res.json({ mensaje: "Incidencia eliminada correctamente" });
+};
+
 const getEstadisticas = (req, res) => {
     const estadisticas = {
         totalIncidencias: incidencias.length,
@@ -111,6 +124,7 @@ module.exports = {
     listarIncidencias,
     buscarIncidenciaPorId,
     cambiarEstado,
+    eliminarIncidencia,
     getEstadisticas,
     getClasificacion,
     incidencias
